@@ -1,13 +1,12 @@
 ## Tools
-- IETF tools: http://tools.ietf.org/
-- parser generator: https://github.com/Engelberg/instaparse/blob/master/docs/ABNF.md
-- random value generator: http://www.quut.com/abnfgen/
-- abnf2regex
-    - https://www.msweet.org/projects.php?Z8
-    - https://github.com/akr/abnf
+- [IETF tools](http://tools.ietf.org/)
+- [parser generator](https://github.com/Engelberg/instaparse/blob/master/docs/ABNF.md)
+- [random value generator](http://www.quut.com/abnfgen/)
+- [abnf2regex](https://github.com/akr/abnf)
 
-## Syntax (see http://tools.ietf.org/html/rfc5234)
+## Syntax (see [RFC5234](http://tools.ietf.org/html/rfc5234))
 
+```
 filterlist = header *( 1CRLF *WSP line )
   header = "[Adblock" [ 1*WSP "Plus" 1*WSP 1*( 1*DIGIT / "." ) ] "]"
     ; /\[Adblock(?:\s*Plus\s*([\d\.]+)?)?\]/i
@@ -59,3 +58,4 @@ selector = <see http://www.w3.org/TR/CSS2/selector.html#selector-syntax and http
   ; CSS selector
 sitekey = 
   ; RSA signature
+```
