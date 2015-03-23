@@ -26,7 +26,8 @@ filterlist = header *( 1CRLF *WSP line )
             associative-option = domain-option / sitekey-option
               domain-option = "domain=" negatable-domain *( "|" negatable-domain )
                 negatable-domain = [ "~" ] host
-              sitekey-option = "sitekey=" sitekey *( "|" sitekey )
+              sitekey-option = "sitekey=" negatable-sitekey *( "|" negatable-sitekey )
+                negatable-sitekey = [ "~" ] sitekey
             negatable-option = [ "~" ] negatable
               negatable = "collapse" / "image" / "match-case" / "object" / "object-subrequest" / "other" / "script" / "stylesheet" / "subdocument" / "third-party"
             other-option = "document" / "elemhide" / "popup"
@@ -50,6 +51,6 @@ md5 =
   ; MD5 hash
 selector = <see http://www.w3.org/TR/CSS2/selector.html#selector-syntax and http://www.w3.org/TR/css3-selectors/#selector-syntax and http://www.w3.org/TR/css3-selectors/#lex>
   ; CSS selector
-sitekey = 
-  ; RSA signature
+sitekey = %x30-39 / %x41-5A / %x61-7A / "+" / "/" / "="
+  ; base64-encoded DER representation of RSA public key
 ```
