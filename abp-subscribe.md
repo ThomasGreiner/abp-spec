@@ -1,8 +1,10 @@
 # abp:subscribe URIs
 
 ```
-abp-subscribe = "abp:" *"/" "subscribe" *"/" "?" params
-  ; /^abp:\/*subscribe\/*\?(.*)/i
+abp-subscribe = ( abp-prefix / web-prefix ) "?" params
+  abp-prefix = "abp:" *"/" "subscribe" *"/"
+    ; /^abp:\/*subscribe\/*\?(.*)/i
+  web-prefix = scheme "://subscribe.adblockplus.org" [ "/" ]
   params = param *( "&" param )
     param = title / location / requiresTitle / requiresLocation
       title = "title=" uri-encoded
