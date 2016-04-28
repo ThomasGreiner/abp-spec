@@ -30,8 +30,8 @@ filterlist = header *( CRLF *WSP line )
                 negatable-sitekey = [ "~" ] sitekey
             negatable-option = [ "~" ] negatable
               negatable = "collapse" / "image" / "match-case" / "object" / "object-subrequest" / "other" / "script" / "stylesheet" / "subdocument" / "third-party"
-            other-option = "document" / "elemhide" / "popup"
-      hiding-filter = [ negatable-host *( "," negatable-host ) ] "#" [ "@" ] "#" selector
+            other-option = "document" / "elemhide" / "genericblock" / "generichide" / "ping" / "popup"
+      hiding-filter = [ negatable-host *( "," negatable-host ) ] "#" [ "@" ] "#" css-selector
         ; /^([^\/\*\|\@"!]*?)#(\@)?(?:([\w\-]+|\*)((?:\([\w\-]+(?:[$^*]?=[^\(\)"]*)?\))*)|#([^{}]+))$/
         ; /^(.*?)(#\@?#?)(.*)$/
 
