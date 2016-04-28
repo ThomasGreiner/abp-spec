@@ -1,7 +1,7 @@
 # Filter list
 
 ```
-filterlist = header *( 1CRLF *WSP line )
+filterlist = header *( CRLF *WSP line )
   header = "[Adblock" [ 1*WSP "Plus" 1*WSP 1*( 1*DIGIT / "." ) ] "]"
     ; /\[Adblock(?:\s*Plus\s*([\d\.]+)?)?\]/i
   line = comment / filter
@@ -16,22 +16,22 @@ filterlist = header *( 1CRLF *WSP line )
         redirect = "Redirect" *WSP ":" *WSP url
         version = "Version" *WSP ":" *WSP 1*DIGIT
     filter = blocking-filter / hiding-filter
+      negatable-host = [ "~" ] host
       blocking-filter = [ "@@" ] ( domain-filter / regexp-filter ) [ "$" [ options ] ]
         domain-filter = *2"|" 1*charset
-        regexp-filter = "/" string "/"
+        regexp-filter = "/" regexp "/"
           ; /^(@@)?\/.*\/(?:\$~?[\w\-]+(?:=[^,\s]+)?(?:,~?[\w\-]+(?:=[^,\s]+)?)*)?$/
         options = option *( "," option )
           ; /\$(~?[\w\-]+(?:=[^,\s]+)?(?:,~?[\w\-]+(?:=[^,\s]+)?)*)$/
           option = associative-option / negatable-option / other-option
             associative-option = domain-option / sitekey-option
-              domain-option = "domain=" negatable-domain *( "|" negatable-domain )
-                negatable-domain = [ "~" ] host
+              domain-option = "domain=" negatable-host *( "|" negatable-host )
               sitekey-option = "sitekey=" negatable-sitekey *( "|" negatable-sitekey )
                 negatable-sitekey = [ "~" ] sitekey
             negatable-option = [ "~" ] negatable
               negatable = "collapse" / "image" / "match-case" / "object" / "object-subrequest" / "other" / "script" / "stylesheet" / "subdocument" / "third-party"
             other-option = "document" / "elemhide" / "popup"
-      hiding-filter = [ host *( "," host ) ] "#" [ "@" ] "#" selector
+      hiding-filter = [ negatable-host *( "," negatable-host ) ] "#" [ "@" ] "#" selector
         ; /^([^\/\*\|\@"!]*?)#(\@)?(?:([\w\-]+|\*)((?:\([\w\-]+(?:[$^*]?=[^\(\)"]*)?\))*)|#([^{}]+))$/
         ; /^(.*?)(#\@?#?)(.*)$/
 
@@ -47,9 +47,11 @@ http-url = <see http://tools.ietf.org/html/rfc3986#section-3>
   ; URL restricted to HTTP(S) protocol
 host = <see http://tools.ietf.org/html/rfc3986#section-3.2.2>
   ; host part of a URI
-md5 = 
+md5 = <see https://www.ietf.org/rfc/rfc1321.txt>
   ; MD5 hash
-selector = <see http://www.w3.org/TR/CSS2/selector.html#selector-syntax and http://www.w3.org/TR/css3-selectors/#selector-syntax and http://www.w3.org/TR/css3-selectors/#lex>
+regexp =
+  ; regular expression (according to ECMAScript)
+css-selector = <see http://www.w3.org/TR/CSS2/selector.html#selector-syntax and http://www.w3.org/TR/css3-selectors/#selector-syntax and http://www.w3.org/TR/css3-selectors/#lex>
   ; CSS selector
 sitekey = %x30-39 / %x41-5A / %x61-7A / "+" / "/" / "="
   ; base64-encoded DER representation of RSA public key
