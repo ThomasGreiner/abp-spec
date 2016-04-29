@@ -53,6 +53,17 @@ regexp =
   ; regular expression (according to ECMAScript)
 css-selector = <see http://www.w3.org/TR/CSS2/selector.html#selector-syntax and http://www.w3.org/TR/css3-selectors/#selector-syntax and http://www.w3.org/TR/css3-selectors/#lex>
   ; CSS selector
+  ; may contain CSS Property Selector
 sitekey = %x30-39 / %x41-5A / %x61-7A / "+" / "/" / "="
   ; base64-encoded DER representation of RSA public key
+```
+
+## CSS Property Selector
+
+```
+css-property-selector = "[-abp-properties=" quotation domain-filter quotation "]"
+  ; /\[\-abp\-properties=(["'])([^"']+)\1\]/
+
+domain-filter = <see domain-filter in filterlist.md>
+quotation = "'" / "\""
 ```
