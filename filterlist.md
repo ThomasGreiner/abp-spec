@@ -31,8 +31,8 @@ filterlist = header *( CRLF *WSP line )
             negatable-option = [ "~" ] negatable
               negatable = "background" / "collapse" / "dtd" / "font" / "image" / "match-case" / "media" / "object" / "object-subrequest" / "other" / "ping" / "script" / "stylesheet" / "subdocument" / "third-party" / "webrtc" / "websocket" / "xbl"
             other-option = "document" / "elemhide" / "genericblock" / "generichide" / "ping" / "popup"
-      hiding-filter = [ negatable-host *( "," negatable-host ) ] "#" [ "@" ] "#" css-selector
-        ; /^([^/*|@"!]*?)#(@)?(?:([\w-]+|\*)((?:\([\w-]+(?:[$^*]?=[^()"]*)?\))*)|#(.+))$/
+      hiding-filter = [ negatable-host *( "," negatable-host ) ] "#" [ "@" / "?" ] "#" css-selector
+        ; /^([^/*|@"!]*?)#([@?])?#(.+)$/
         ; /^(.*?)(#@?#?)(.*)$/
 
 charset = %x21-7E
@@ -58,12 +58,19 @@ sitekey = %x30-39 / %x41-5A / %x61-7A / "+" / "/" / "="
   ; base64-encoded DER representation of RSA public key
 ```
 
-## CSS Property Selector
+## Element Hiding Emulation
 
 ```
-css-property-selector = "[-abp-properties=" quotation ( domain-filter / regexp-filter ) quotation "]"
+ehe-selector = ":-abp-" ehe-function
+  ; /:-abp-([\w-]+)\(/i
+  ehe-function = ehe-function-contains / ehe-function-has / ehe-function-properties
+    ehe-function-contains = "contains(" *( charset / sp-charset ) ")"
+    ehe-function-has = "has(" css-selector ")"
+    ehe-function-props = "properties(" ( domain-filter / regexp-filter ) ")"
+ehe-selector-legacy = "[-abp-properties=" quotation ( domain-filter / regexp-filter ) quotation "]"
   ; /\[-abp-properties=(["'])([^"']+)\1\]/
 
 domain-filter = <see domain-filter in filterlist.md>
+regexp-filter = <see regexp-filter in filterlist.md>
 quotation = "'" / "\""
 ```
