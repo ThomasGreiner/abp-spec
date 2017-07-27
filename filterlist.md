@@ -61,8 +61,8 @@ sitekey = %x30-39 / %x41-5A / %x61-7A / "+" / "/" / "="
 ## CSS Property Selector
 
 ```
-css-property-selector = "[-abp-properties=" quotation domain-filter quotation "]"
-  ; /\[\-abp\-properties=(["'])([^"']+)\1\]/
+css-property-selector = "[-abp-properties=" quotation ( domain-filter / regexp-filter ) quotation "]"
+  ; /\[-abp-properties=(["'])([^"']+)\1\]/
 
 domain-filter = <see domain-filter in filterlist.md>
 quotation = "'" / "\""
