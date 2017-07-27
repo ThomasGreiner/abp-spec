@@ -20,9 +20,9 @@ filterlist = header *( CRLF *WSP line )
       blocking-filter = [ "@@" ] ( domain-filter / regexp-filter ) [ "$" [ options ] ]
         domain-filter = *2"|" 1*charset
         regexp-filter = "/" regexp "/"
-          ; /^(@@)?\/.*\/(?:\$~?[\w\-]+(?:=[^,\s]+)?(?:,~?[\w\-]+(?:=[^,\s]+)?)*)?$/
+          ; /^(@@)?\/.*\/(?:\$~?[\w-]+(?:=[^,\s]+)?(?:,~?[\w-]+(?:=[^,\s]+)?)*)?$/
         options = option *( "," option )
-          ; /\$(~?[\w\-]+(?:=[^,\s]+)?(?:,~?[\w\-]+(?:=[^,\s]+)?)*)$/
+          ; /\$(~?[\w-]+(?:=[^,\s]+)?(?:,~?[\w-]+(?:=[^,\s]+)?)*)$/
           option = associative-option / negatable-option / other-option
             associative-option = domain-option / sitekey-option
               domain-option = "domain=" negatable-host *( "|" negatable-host )
@@ -32,8 +32,8 @@ filterlist = header *( CRLF *WSP line )
               negatable = "background" / "collapse" / "dtd" / "font" / "image" / "match-case" / "media" / "object" / "object-subrequest" / "other" / "ping" / "script" / "stylesheet" / "subdocument" / "third-party" / "webrtc" / "websocket" / "xbl"
             other-option = "document" / "elemhide" / "genericblock" / "generichide" / "ping" / "popup"
       hiding-filter = [ negatable-host *( "," negatable-host ) ] "#" [ "@" ] "#" css-selector
-        ; /^([^\/\*\|\@"!]*?)#(\@)?(?:([\w\-]+|\*)((?:\([\w\-]+(?:[$^*]?=[^\(\)"]*)?\))*)|#([^{}]+))$/
-        ; /^(.*?)(#\@?#?)(.*)$/
+        ; /^([^/*|@"!]*?)#(@)?(?:([\w-]+|\*)((?:\([\w-]+(?:[$^*]?=[^()"]*)?\))*)|#(.+))$/
+        ; /^(.*?)(#@?#?)(.*)$/
 
 charset = %x21-7E
   ; CHAR = %x01-7F
